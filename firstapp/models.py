@@ -17,5 +17,13 @@ class Stud2(models.Model):
     def __str__(self):
         return self.snm
     
+class Insertstud(models.Model):
+    no = models.IntegerField()
+    name = models.CharField(max_length=40)
+    fees = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+    
 
     

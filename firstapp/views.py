@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from firstapp.models import Stud, Stud2
+from firstapp.models import Stud, Stud2, Insertstud
 from django.http import HttpResponse
-from firstapp.forms import studentform
+from firstapp.forms import student, studentform
 # Create your views here.
 
 def home(request):
@@ -50,5 +50,21 @@ def showforms(request):
         st = studentform()
 
     return render(request,'firstapp/home.html',{'so':st})
+
+def insertstud(request):
+    if request.method == "POST":
+        st2 = student(request.POST)
+        if st2.is_valid():
+            no3 = st2.cleaned_data['sno']
+            name3 = st2.cleaned_data['name']
+            fees3 = st2.cleaned_data['sfees']
+            st3 = Insertstud(no = no3, name = name3, fees = fees3)
+            st3.save()
+
+    else:    
+        print("this is get request")
+        st2 = student()
+
+    return render(request,'firstapp/insert.html',{'sar':st2})
 
 

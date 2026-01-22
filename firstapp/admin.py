@@ -1,5 +1,5 @@
 from django.contrib import admin
-from firstapp.models import Stud, Stud2
+from firstapp.models import Stud, Stud2, Insertstud
 
 # Register your models here.
 class StudentAdmin(admin.ModelAdmin):
@@ -11,3 +11,8 @@ class Student2Admin(admin.ModelAdmin):
     list_display = ['snm','semail']
 
 admin.site.register(Stud2,Student2Admin)
+
+class StudentInsert(admin.ModelAdmin):
+    list_display = ['no','name', 'fees']
+
+admin.site.register(Insertstud,StudentInsert)
