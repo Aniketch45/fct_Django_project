@@ -24,6 +24,12 @@ class Insertstud(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+class Employee(models.Model):
+    ename = models.CharField(max_length=30)
+    esalary  = models.IntegerField()
+
+    def __str__(self):
+        return self.ename    
 
     

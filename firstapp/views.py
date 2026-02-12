@@ -1,9 +1,14 @@
 from django.shortcuts import render
-from firstapp.models import Stud, Stud2, Insertstud
+from firstapp.models import Stud, Stud2, Insertstud, Employee
 from django.http import *
 from firstapp.forms import StudentForm2, StudentForm
 from django.conf import settings
 from django.core.mail import send_mail
+from .serializers import EmployeeSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework import status
 # Create your views here.
 
 def home(request):
@@ -98,3 +103,25 @@ def image(request):
         return render(request,'firstapp/image_display.html')
     else:
         return render(request,'firstapp/image_display.html')
+    
+@api_view(['GET','POST'])
+def get_employees(request):
+    emp = Employee.objects.all()
+    serializer = EmployeeSerializer(emp,many=True)
+    return Response({'data':serializer.data})
+
+class listemployees(APIView):
+    def get(self,request):
+        emp = Employee.objects.all()
+        serializer = EmployeeSerializer(emp,many=True)
+        return Response({'data':serializer.data})
+
+
+    def post(self,request):
+        serialize_data = EmployeeSerializer(data=request.data)
+        if serialize_data.is_valid(raise_exception=True):
+            obj = serialize_data.save()
+            return Response({ 'success':"{} data inserted succesfully".format(obj.ename)})
+        return Response(serialize_data.errors,status=status.HTTP_400_BAD_REQUEST)
+        
+

@@ -12,4 +12,5 @@ urlpatterns = [
     path('update2/',views.update,name='update2'),
     path('stud/',views.Stud,name='stud'),
     path('image/',views.image,name='image'),
+    
 ]
