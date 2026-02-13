@@ -124,4 +124,22 @@ class listemployees(APIView):
             return Response({ 'success':"{} data inserted succesfully".format(obj.ename)})
         return Response(serialize_data.errors,status=status.HTTP_400_BAD_REQUEST)
         
-
+class UpdateEmployees(APIView):
+    def get(self,request,id):
+        emp = Employee.objects.get(id=id)
+        serializer = EmployeeSerializer(emp)
+        return Response({'data':serializer.data})
+    
+    def put(self,request,id):
+        emp = Employee.objects.get(id=id)
+        serialize_data = EmployeeSerializer(emp,data=request.data)
+        if serialize_data.is_valid(raise_exception=True):
+            obj = serialize_data.save()
+            return Response({ 'success':"{} data inserted succesfully".format(obj.ename)})
+        return Response(serialize_data.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self,request,id):
+        emp = Employee.objects.get(id=id)
+        emp.delete()
+        return Response(status=status.HTTP_200_OK)
+        
